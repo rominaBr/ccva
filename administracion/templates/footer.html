@@ -1,0 +1,84 @@
+{% block footer%}
+<!-- Remove the container if you want to extend the Footer to full width. -->
+
+
+<div class="container-fluid my-5">
+
+    <footer class="text-white text-center text-lg-start bg-primary">
+    <!-- Grid container -->
+    <div class="container p-4">
+      <!--Grid row-->
+      <div class="row mt-4">
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-4">Sobre nosotros</h5>  
+  
+          <p>
+            <h5>Misión:</h5> {{datos.mision}}
+          </p>
+          <p>
+            <h5>Visión:</h5>
+             {{datos.vision}}
+          </p>  
+          
+        </div>
+        <!--Grid column-->
+  
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">    
+            <h5 class="text-uppercase mb-4">redes sociales</h5>        
+            <div class="mt-4">
+                <!-- Facebook -->
+                {% if datos.facebook != None %}
+                    <a type="button" href="{{datos.facebook}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-facebook-f"></i></a>
+                
+                {% endif %}
+                {% if datos.instagram != None %}
+                <!-- Instagram -->
+                    <a type="button" href="{{datos.instagram}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-instagram"></i></a>
+                
+                {% endif %}
+                {% if datos.twitter != None %}
+                <!-- Twitter -->
+                    <a type="button" href="{{datos.twitter}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-twitter"></i></a>
+                
+                {% endif %}
+              </div>
+          
+        </div>
+        <!--Grid column-->
+  
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-4">Contacto</h5>
+          <ul class="fa-ul" style="margin-left: 1.65em;">
+            <li class="mb-3">
+              <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">{{datos.direccion}}</span>
+            </li>
+            <li class="mb-3">
+              <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">{{datos.email}}</span>
+            </li>
+            <li class="mb-3">
+              <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">{{datos.telefono}}</span>
+            </li>            
+          </ul>
+          
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </div>
+    <!-- Grid container -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright: Informatorio Grupo 8 - Comisión 6
+     
+    </div>
+    <!-- Copyright -->
+  </footer>
+  
+</div>
+<!-- End of .container -->
+
+{% endblock %}

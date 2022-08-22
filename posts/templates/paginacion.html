@@ -1,0 +1,81 @@
+{% if is_paginated %}
+<nav aria-label="paginacion">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previo">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        
+        {% else %}
+            <li class="page-item disabled">
+                <a href="#" class="page-link" aria-label="Previo">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        {% for i in paginator.page_range %}            
+            <li class="page-item {% if page_obj.number == i %}active{% endif %}" aria-current="page">
+                <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+            </li>        
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class="page-intem">
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Siguiente">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link" aria-label="Siguiente">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>    
+
+
+{% else %}
+{% if is_paginatedBuscar %}
+
+<nav aria-label="paginacion" class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if listaposts.has_previous %}
+            <li class="page-item">
+                <a href="?buscador={{ busqueda }}&page={{ listaposts.previous_page_number }}" class="page-link" aria-label="Previo">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        
+        {% else %}
+            <li class="page-item disabled">
+                <a href="#" class="page-link" aria-label="Previo">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        {% for i in page_range %}            
+            <li class="page-item {% if current_page == i %}active{% endif %}" aria-current="page">
+                <a href="?buscador={{ busqueda }}&page={{ i }}" class="page-link">{{ i }}</a>
+            </li>        
+        {% endfor %}
+        {% if listaposts.has_next %}
+            <li class="page-intem">
+                <a href="?buscador={{ busqueda }}&page={{ listaposts.next_page_number }}" class="page-link" aria-label="Siguiente">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a href="#" class="page-link" aria-label="Siguiente">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>    
+
+{% endif %}
+{% endif %}

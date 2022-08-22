@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Inicio{% endblock titulo %}
+
+{% block content %}
+
+{% if principal != '' %}
+<!--Post principal-->
+<div class="slide-one-item home-slider owl-carousel">
+    <div class="site-cover site-cover-sm same-height overplay" style="background-image: url({{ principal.imagen_referencial.url }});">
+        <div class="container">
+            <div class="row same-height align-items-center">
+              <div class="col-md-12 col-lg-6">
+                <div class="post-entry">
+                  <span class="post-category text-white bg-info mb-3">{{ principal.categoria | upper }}</span>
+                  <h2 class="mb-4"><a href="{% url 'posts:detalle_post' principal.slug %}">{{ principal.titulo }}</a></h2>
+                  <div class="post-meta align-items-center text-left">
+                    {% if principal.autor.foto.url != '' %}
+                      <figure class="author-figure mb-0 mr-3 float-left"><img src="{{ principal.autor.perfil.foto.url }}" alt="Image" class="img-fluid"></figure>
+                    {% else %}
+                      <figure class="author-figure mb-0 mr-3 float-left"><img src="static/imagenes/perfilsinfoto.png" alt="Image" class="img-fluid"></figure>
+                    {% endif %}
+                      <span class="d-inline-block mt-1">Autor: {{ principal.autor }}</span>
+                    <span>{{ principal.fecha_publicacion }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!--Post secundarios-->
+
+<div class="site-section">
+   
+    <div class="container">
+            
+      <!--Post 1-->
+      <div class="row align-items-stretch retro-layout">
+        <div class="col-md-5">
+          {% if post1 == '' %}
+          <a href="" class="hentry img-1 h-100" style="background-image: url('static/imagenes/reparacion.jpg');">
+            <span class="post-category text-white bg-info">SIN POST</span>
+            <div class="text">
+              <h2>...</h2>
+              <span>...</span>
+            </div>
+          </a>
+          {% else %}
+          <a href="{% url 'posts:detalle_post' post1.slug %}" class="hentry img-1 h-100" style="background-image: url({{ post1.imagen_referencial.url }});">
+            <span class="post-category text-white bg-info">{{ post1.categoria |upper }}</span>
+            <div class="text">
+              <h2>{{ post1.titulo }}</h2>
+              <span>{{ post1.fecha_publicacion }}</span>
+            </div>
+          </a>
+          {% endif %}
+        </div>  
+  
+  
+        <!--Post2-->
+        <div class="col-md-7">
+          {% if post2 == '' %}
+          <a href="" class="hentry img-2 v-height mb30" style="background-image: url('static/imagenes/reparacion.jpg');">
+            <span class="post-category text-white bg-info">SIN POST</span>
+            <div class="text text-sm">
+              <h2>...</h2>
+              <span>...</span>
+            </div>
+          </a>
+          {% else %}
+          <a href="{% url 'posts:detalle_post' post2.slug %}" class="hentry img-2 v-height mb30" style="background-image: url({{ post2.imagen_referencial.url }});">
+            <span class="post-category text-white bg-info">{{ post2.categoria |upper }}</span>
+            <div class="text text-sm">
+              <h2>{{ post2.titulo }}</h2>
+              <span>{{ post2.fecha_publicacion }}</span>
+            </div>
+          </a>
+          {% endif %}
+         <!--Post3 y Post4-->
+  
+          <div class="two-col d-block d-md-flex" style="justify-content: space-between;">
+            {% if post3 == '' %}
+            <a href="" class="hentry v-height img-2" style="background-image: url('static/imagenes/reparacion.jpg');">
+              <span class="post-category text-white bg-info">SIN POST</span>
+              <div class="text">
+                <h2>...</h2>
+                <span>...</span>
+              </div>
+            </a>
+            {% else %}
+            <a href="{% url 'posts:detalle_post' post3.slug %}" class="hentry v-height img-2" style="background-image: url({{ post3.imagen_referencial.url }});">
+              <span class="post-category text-white bg-info">{{ post3.categoria |upper }}</span>
+              <div class="text text-sm">
+                <h2>{{ post3.titulo }}</h2>
+                <span>{{ post3.fecha_publicacion }}</span>
+              </div>
+            </a>
+            {% endif %}
+            {% if post4 == '' %}
+            <a href="" class="hentry v-height img-2 ml-auto" style="background-image: url('static/imagenes/reparacion.jpg');">
+              <span class="post-category text-white bg-info">SIN POST</span>
+              <div class="text">
+                <h2>...</h2>
+                <span>...</span>
+              </div>
+            </a>
+            {% else %}
+            <a href="{% url 'posts:detalle_post' post4.slug %}" class="hentry v-height img-2 ml-auto" style="background-image: url({{ post4.imagen_referencial.url }});">
+              <span class="post-category text-white bg-info">{{ post4.categoria |upper }}</span>
+              <div class="text text-sm">
+                <h2>{{ post4.titulo }}</h2>
+                <span>{{ post4.fecha_publicacion }}</span>
+              </div>
+            </a>
+            {% endif %}
+          </div>
+           
+          
+        </div>
+        
+          
+      </div>
+      
+      
+    </div>
+    
+</div>
+
+{% endblock %}
+
+

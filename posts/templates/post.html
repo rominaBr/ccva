@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %} {{ post.titulo |upper }} | CCVA {% endblock titulo %}
+
+{% block content %}
+
+
+<div class="site-cover site-cover-sm same-height overlay single-page"
+    style="background-image: url({{ post.imagen_referencial.url }}); ">
+    <div class="container">
+        <div class="row same-height justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="post-entry text-center">
+                    <span class="post-category text-white bg-info mb-3">{{ post.categoria }}</span>
+                    <h1 class="mb-4 texto-borde">{{ post.titulo |upper }}</h1>
+                    <div class="post-meta align-items-center text-center">
+                        
+                            {% if post.autor.foto.url != null %}
+                                <figure class="author-figure mb-0 mr-3 d-inline-block">
+                                    <img src="{{ post.autor.perfil.foto.url }}" alt="Image" class="img-fluid">
+                                </figure>
+                            {% else %}
+                                <figure class="author-figure mb-0 mr-3 d-inline-block">
+                                    <img src="{% static 'imagenes/perfilsinfoto.png' %}" alt="Image" class="img-fluid">
+                                </figure>
+                            {% endif %}
+                        
+                        <span class="d-inline-block mt-1 texto-borde">{{ post.autor }}</span>
+                        <span class="texto-borde">{{ post.fecha_publicacion }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="site-section py-lg">
+    <div class="container">
+
+        <div class="row blog-entries element-animate">
+
+            <div class="col-md-12 col-lg-8 main-content">
+
+                <div class="post-content-body box">
+                    {{ post.contenido |safe }}
+                </div>
+            </div>
+
+            <!-- END main-content -->
+            
+            <div class="col-md-12 col-lg-4 sidebar">
+                <!-- END sidebar-box -->
+                <div class="sidebar-box" style="background-color: #0257ad; border-radius: 40px;">
+                    <div class="bio text-center">
+                        {% if post.autor.perfil.foto.url != null %}
+                            <img src="{{ post.autor.perfil.foto.url }}" alt="Image Placeholder" class="img-fluid mb-2 mt-5">
+                        {% else %}
+                            <img src="{% static 'imagenes/perfilsinfoto.png' %}" alt="Image Placeholder" class="img-fluid mb-2 mt-5">
+                        {% endif %}
+                        <div class="bio-body">
+                            <h2>{{ post.autor }}</h2>
+                            <p class="mb-4">{{ post.autor.perfil.descripcion }}</p>
+                            <p class="social mb-3">
+                                {% if post.autor.perfil.facebook == null %}
+                                    <i class="fa-brands fa-facebook p-2 fa-2x"></i>
+                                {% else %}
+                                    <a href="{{ post.autor.perfil.facebook }}" class="p-2"><i class="fa-brands fa-facebook fa-2x"></i></a>
+                                {% endif %}
+                                {% if post.autor.perfil.twitter == null %}                               
+                                    <i class="fa-brands fa-twitter p-2 fa-2x" ></i>
+                                {% else %}
+                                    <a href="{{ post.autor.perfil.twitter }}" class="p-2"><i class="fa-brands fa-twitter fa-2x"></i></a>
+                                {% endif %}
+                                {% if post.autor.perfil.instagram == null %}
+                                    <i class="fa-brands fa-instagram p-2 fa-2x"></i>
+                                {% else %}
+                                    <a href="{{ post.autor.perfil.instagram }}" class="p-2"><i class="fa fa-instagram fa-2x"></i></a>
+                                {% endif %}
+                                {% if post.autor.perfil.web == null %}
+                                    <i class="fa-solid fa-link p-2 fa-2x"></i>
+                                {% else %}
+                                    <a href="{{ post.autor.perfil.web }}" class="p-2"><i class="fa-solid fa-link fa-2x"></i></a>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{% endblock content%}
