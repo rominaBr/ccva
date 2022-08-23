@@ -5,6 +5,9 @@ from .forms import UserRegisterForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from administracion.views import listarCategorias, obtenerDatos
+from django.views import generic
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserChangeForm
 
 
 def register(request):
@@ -40,5 +43,13 @@ def profile(request, username=None):
     contexto = {
         'user': user,
         'posts': posts,
+        'categorias': listarCategorias,
+        'datos': obtenerDatos,
     }
     return render(request, 'perfil.html', contexto)
+
+class UserEditForm(generic.UpdateView):
+    form_class = UserChangeForm
+    template_name = 'perfil.html'
+    success_url = reverse_lazy('base:index')
+   

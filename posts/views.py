@@ -13,10 +13,7 @@ def consulta(id):
 
 class DetallePost(DetailView):
     def get(self, request, slug, *args, **kwargs):
-        try:
-            post = Post.objects.get(slug = slug)
-        except:
-            post = None
+        post = get_object_or_404(Post, slug = slug)
 
         contexto = {
             'post': post,
@@ -83,18 +80,28 @@ class Inicio(ListView):
 
 def crear_post(request):
     current_user = get_object_or_404(User, pk=request.user.pk)
+    
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
+        file = request.FILES.get('imagen_referencial')
         if form.is_valid():
             post = form.save(commit=False)
-            post.autor = current_user
+            post.autor = current_user            
+            post.save()            
+            
+            post.imagen_referencial = file
             post.save()
             messages.success(request, 'Post enviado')
-            return redirect('posts.html')
+            return redirect('posts:todos')
     else:
         form = PostForm()
+    context = {
+            'datos': obtenerDatos(),
+            'categorias': listarCategorias(),
+            'form': form,
+        }
     
-    return render(request, 'crearpost.html', {'form':form})
+    return render(request, 'crearpost.html', context)
 
 
 

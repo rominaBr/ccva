@@ -83,6 +83,7 @@
           </li>          
         </ul>
         <!--Fin extremo izquierdo-->
+        <hr class="text-black-50">
         <div class="dropdown text-end mb-5">
           <ul class="navbar-nav mt-5 mb-2 mb-lg-0 flex-row flex-wrap">
             {% if user.is_authenticated %}
@@ -98,7 +99,7 @@
                 <li><a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Administración</a></li>
                 <li><a class="dropdown-item" href="{% url 'posts:nuevo' %}">Nuevo Post</a></li>
                 {% endif %}
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="{% url 'cuentas:perfil' %}">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{% url 'cuentas:logout' %}">Cerrar sesión</a></li>

@@ -3,14 +3,24 @@
 
 {% block content %}
 
-<div class="container">
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.media }}
-        {{ form | crispy }}
-        <button type="submit">Enviar</button>
-    </form>
+<div class="container">    
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg col-md-8 col-sm-8">
+            <form action="" method="post" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form | crispy }}
+                
+                <button class="btn btn-primary redondeado" type="submit">Enviar</button>
+            </form>
+                
+        </div>
+    </div>
 </div>
+
+
 
 
 {% endblock %}
