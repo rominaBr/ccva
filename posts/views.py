@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import  DetailView, ListView, CreateView
+from django.views.generic.base import View
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from .models import Post
 from .forms import PostForm
 from administracion.views import obtenerDatos, listarCategorias
@@ -104,8 +107,6 @@ def crear_post(request):
     return render(request, 'crearpost.html', context)
 
 
-
-
 class ListarTodosLosPosts(ListView):
     model = Post
     ordering = '-fecha_publicacion'
@@ -120,3 +121,60 @@ class ListarTodosLosPosts(ListView):
         context['categorias'] = listarCategorias()
         
         return context
+
+
+class AddLike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk = pk)
+
+        is_dislike = False
+        for dislike in post.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if is_dislike:
+            post.dislikes.remove(request.user)
+
+        is_like = False
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            post.likes.add(request.user)
+
+        if is_like:
+            post.likes.remove(request.user)
+
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)
+
+class AddDislike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk = pk)
+
+        is_like = False
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            post.likes.remove(request.user)
+
+        is_dislike = False
+        for dislike in post.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            post.likes.add(request.user)
+
+        if is_dislike:
+            post.dislikes.remove(request.user)
+
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)      
