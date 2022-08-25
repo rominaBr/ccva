@@ -17,6 +17,7 @@
     border-radius: 4px;
 }
 
+
 .texto-borde {
     -webkit-text-stroke: 1px black;
     color: transparent; 

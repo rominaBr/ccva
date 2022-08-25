@@ -1,4 +1,5 @@
 import os
+from time import timezone
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
@@ -63,5 +64,11 @@ def url_creada(sender, instance, *args, **kwargs):
 
 pre_save.connect(url_creada, sender=Post)
 
+class Comentarios(models.Model):
+    comentario = models.TextField('Comentario')
+    creado = models.DateTimeField('Fecha de publicación', auto_now = False, auto_now_add = True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='autor_comentario')
+    likes = models.ManyToManyField(User, blank=True, related_name='likes_comentario')
+    dislikes = models.ManyToManyField(User, blank=True, related_name='dislikes_comentario')
 
 

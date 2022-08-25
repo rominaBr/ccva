@@ -11,7 +11,7 @@ urlpatterns = [
     path('nuevo/', views.crear_post, name='nuevo'),
     path('detalle/<slug:slug>/', DetallePost.as_view(), name = 'detalle_post'),
     path('detalle/<int:pk>/like', AddLike.as_view(), name='like'),
-    path('detalles/<int:pk>/dislike', AddDislike.as_view(), name='dislike'),
-    
+    path('detalle/<int:pk>/dislike', AddDislike.as_view(), name='dislike'),
+
     
 ]

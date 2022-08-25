@@ -38,98 +38,99 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-lith">
-    <div class="container-fluid d-flex felx-wrap alighn-items-center justify-content-center justify-content-lg-start">
-      <a class="navbar-brand" href="{% url 'base:index' %}"><img src="{% static 'imagenes/logo1.png' %}"
-        alt="Cámara de Comercio de Villa Ángela" width=auto height="100"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+<nav class="navbar navbar-expand-lg navbar-light bg-lith p-2">
+    <a class="navbar-brand" href="{% url 'base:index' %}"><img src="{% static 'imagenes/logo1.png' %}"
+      alt="Cámara de Comercio de Villa Ángela" width=auto height="100"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item nav_hover">
-            <a class="nav-link active" aria-current="page" href="{% url 'base:index' %}">Inicio</a>
-          </li>
-          <li class="nav-item dropdown nav_hover">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Posteos
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">               
-              <li><a class="dropdown-item" href="{% url 'posts:todos' %}">Todos los posts</a></li>   
-              <li><hr class="dropdown-divider"></li>                      
-              {%for cat in categorias %}
-              <li>
-                <form action="{% url 'base:index' %}">
-                  {% csrf_token %}
-                  <a class="dropdown-item li_hover" href="{% url 'posts:categorias' cat.id %}">{{cat.nombre}}</a>
-                </form>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="container-fluid">
+        <div class="d-lg-flex bd-highlight mb-3">
+          <div class="p-2 bd-highlight">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item nav_hover">
+                <a class="nav-link active" aria-current="page" href="{% url 'base:index' %}">Inicio</a>
               </li>
-              {% endfor %}
+              <li class="nav-item dropdown nav_hover">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Posteos
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">               
+                  <li><a class="dropdown-item" href="{% url 'posts:todos' %}">Todos los posts</a></li>   
+                  <li><hr class="dropdown-divider"></li>                      
+                  {%for cat in categorias %}
+                  <li>
+                    <form action="{% url 'base:index' %}">
+                      {% csrf_token %}
+                      <a class="dropdown-item li_hover" href="{% url 'posts:categorias' cat.id %}">{{cat.nombre}}</a>
+                    </form>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="nav-item dropdown nav_hover">
+                <a href="" class="nav-link dropdown-toggle" aria-current="page" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Sobre Nosotros</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a href="" class="dropdown-item">Misión y Visión</a></li>
+                  <li><a href="" class="dropdown-item">Historia</a></li>
+                  <li><a href="" class="dropdown-item">Miembros</a></li>
+                </ul>
+              </li>
+              <li class="nav-item nav_hover">
+                <a href="" class="nav-link active" aria-current="page">Item 2</a>
+              </li>          
             </ul>
-          </li>
-          <li class="nav-item dropdown nav_hover">
-            <a href="" class="nav-link dropdown-toggle" aria-current="page" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">Sobre Nosotros</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a href="" class="dropdown-item">Misión y Visión</a></li>
-              <li><a href="" class="dropdown-item">Historia</a></li>
-              <li><a href="" class="dropdown-item">Miembros</a></li>
+          </div>
+          <div class="ms-auto p-2 bd-highlight">
+            <ul class="navbar-nav flex-wrap flex-wrap">
+              {% if user.is_authenticated %}
+              <li class="nav-item mx-2 mt-2">
+                {{user}}
+              </li>
+              <li class="nav-item dropdown mx-2 mt-2">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="{{ user.perfil.foto.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                  {% if user.is_staff %}
+                  <li><a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Administración</a></li>
+                  <li><a class="dropdown-item" href="{% url 'posts:nuevo' %}">Nuevo Post</a></li>
+                  {% endif %}
+                  <li><a class="dropdown-item" href="{% url 'cuentas:perfil' %}">Perfil</a></li>
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'cuentas:logout' %}">Cerrar sesión</a></li>
+                </ul>
+              </li>
+              {% else %}
+              <li class="nav-item nav_hover">
+                <a href="{% url 'cuentas:login' %}" class="nav-link active" aria-current="page">Iniciar sesión</a>
+              </li> 
+              <li class="nav-item nav_hover">
+                <a href="{% url 'cuentas:registro' %}" class="nav-link active" aria-current="page">Registrarse</a>
+              </li> 
+              {% endif %}  
+              <li class="nav-item mx-2 mt-2">
+                <form class="row g-3 mx-2 align-items-center" action="{% url 'posts:buscar' %}">
+                  <div class="col-auto">                
+                    <input type="search" class="form-control redondeado" name="buscador" id="buscador" placeholder="Buscar" aria-label="Search">
+                  </div>              
+                  <div class="col-auto">
+                    <button type="submit" class="btn btn-outline-primary redondeado"><i class="fa-solid fa-magnifying-glass"></i></button>
+                  </div>
+                </form>
+              </li>          
             </ul>
-          </li>
-          <li class="nav-item nav_hover">
-            <a href="" class="nav-link active" aria-current="page">Item 2</a>
-          </li>          
-        </ul>
-        <!--Fin extremo izquierdo-->
-        <hr class="text-black-50">
-        <div class="dropdown text-end mb-5">
-          <ul class="navbar-nav mt-5 mb-2 mb-lg-0 flex-row flex-wrap">
-            {% if user.is_authenticated %}
-            <li class="nav-item mx-2 mt-2 col-6 col-lg-auto">
-              {{user}}
-            </li>
-            <li class="nav-item mx-2 mt-2 col-6 col-lg-auto">
-              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ user.perfil.foto.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
-              </a>
-              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                {% if user.is_staff %}
-                <li><a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Administración</a></li>
-                <li><a class="dropdown-item" href="{% url 'posts:nuevo' %}">Nuevo Post</a></li>
-                {% endif %}
-                <li><a class="dropdown-item" href="{% url 'cuentas:perfil' %}">Perfil</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'cuentas:logout' %}">Cerrar sesión</a></li>
-              </ul>
-            </li>
-            {% else %}
-            <li class="nav-item nav_hover">
-              <a href="{% url 'cuentas:login' %}" class="nav-link active" aria-current="page">Iniciar sesión</a>
-            </li> 
-            <li class="nav-item nav_hover">
-              <a href="{% url 'cuentas:registro' %}" class="nav-link active" aria-current="page">Registrarse</a>
-            </li> 
-            {% endif %}  
-            <li class="nav-item">
-              <form class="row g-3 mx-2 align-items-center" action="{% url 'posts:buscar' %}">
-                <div class="col-auto">                
-                  <input type="search" class="form-control redondeado" name="buscador" id="buscador" placeholder="Buscar" aria-label="Search">
-                </div>              
-                <div class="col-auto">
-                  <button type="submit" class="btn btn-outline-primary redondeado"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-              </form>
-            </li>          
-          </ul>
-        </div>
-
+          </div>
+        </div>    
       </div>
-
     </div>
   </nav>
+
   {% if messages %}
     {% for message in messages %}
       <div class="notification {{message.tags}}">

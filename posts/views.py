@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, ComentForm
 from administracion.views import obtenerDatos, listarCategorias
 import random
 
@@ -18,10 +18,13 @@ class DetallePost(DetailView):
     def get(self, request, slug, *args, **kwargs):
         post = get_object_or_404(Post, slug = slug)
 
+        form = ComentForm()
+
         contexto = {
             'post': post,
             'datos': obtenerDatos(), 
-            'categorias': listarCategorias(),           
+            'categorias': listarCategorias(),    
+            'form': form      
         }
         return render(request, 'post.html',contexto)
 
@@ -171,7 +174,7 @@ class AddDislike(LoginRequiredMixin, View):
                 break
 
         if not is_dislike:
-            post.likes.add(request.user)
+            post.dislikes.add(request.user)
 
         if is_dislike:
             post.dislikes.remove(request.user)
