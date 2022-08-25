@@ -133,9 +133,11 @@
 
   {% if messages %}
     {% for message in messages %}
-      <div class="notification {{message.tags}}">
+    <div class="container">
+      <div class="alert alert-primary" role="alert">      
         {{ message }}
       </div>
+    </div>    
     {% endfor %}
   {% endif %}
 

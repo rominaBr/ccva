@@ -17,8 +17,9 @@
             <form action="" class="form" method="post">
                 {% csrf_token %}
                 {{ form | crispy }}
-                <button type = "submit" id="submit" class="btn btn-primary redondeado">Login</button>
-            </form>
+                <button type = "submit" id="submit" class="btn btn-primary redondeado">Iniciar sesión</button>
+                <span class="m-2">¿No tiene una cuenta? Regístrese <a href="{% url 'cuentas:registro' %}"><strong>aquí</strong></a>.</span>
+              </form>
         </div>
       </div>
     </div>

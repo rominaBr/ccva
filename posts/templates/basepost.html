@@ -34,7 +34,7 @@
                     <span class="text-xs">{{ post.likes.all.count }} Likes</span>
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button class="btn btn-outline-primary redondeado" type="submit">
+                    <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
                         <i class="fa-regular fa-thumbs-up fa-2"></i>
                     </button>
                 </form>
@@ -44,14 +44,14 @@
                     <span class="text-xs">{{ post.dislikes.all.count }} Dislikes</span>
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button class="btn btn-outline-primary redondeado" type="submit">
+                    <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
                         <i class="fa-regular fa-thumbs-down fa-2"></i>
                     </button>
                 </form>
             </div>
             <div class="p-2">
                 <span class="text-xs">Comentar</span>
-                <button class="btn btn-outline-primary redondeado" type="submit">
+                <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
                     <i class="fa-regular fa-message"></i>
                 </button>
             </div>
