@@ -1,8 +1,5 @@
-from operator import truediv
 from django import forms
 from .models import Post, Comentarios
-from ckeditor.widgets import CKEditorWidget
-from ckeditor.fields import RichTextField
 from administracion.views import obtenerDatos, listarCategorias
 
 
