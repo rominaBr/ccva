@@ -67,9 +67,16 @@ pre_save.connect(url_creada, sender=Post)
 
 
 class Comentarios(models.Model):
-    comentario = models.TextField('Comentario')
+    comentario = RichTextField('Comentario')
     creado = models.DateTimeField('Fecha de publicación', auto_now = False, auto_now_add = True)
     autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='autor_comentario')
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, blank= True, related_name='likes_comentario')
     dislikes = models.ManyToManyField(User, blank= True, related_name='dislikes_comentario')
 
+    class Meta:
+        verbose_name = 'Comentario'
+        verbose_name_plural = 'Comentarios'
+    
+    def __str__(self):
+        return f'{self.post.slug} {self.autor}'

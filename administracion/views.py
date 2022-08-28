@@ -1,26 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.core.paginator import Paginator
-from .models import Datos, Categoria
+from .models import Categoria
 from posts.models import Post
 
-
-def obtenerDatos():
-    try:
-        datos = Datos.objects.filter(estado = True).latest('fecha_creacion')
-    except:
-        datos = None
-    return datos
-
-
-def listarCategorias(): 
-    try:
-        cats = list(Categoria.objects.filter(
-                estado = True
-            ).order_by('nombre'))
-    except:
-        cats = None
-    return cats
 
 
 
@@ -44,9 +27,7 @@ def elegirPorCategoria(request, pk):
     else:
         isPaginated = True
 
-    contexto = {
-        'datos': obtenerDatos(),
-        'categorias': listarCategorias(),        
+    contexto = {                
         'listaposts': listaposts,        
         'current_page': current_page,
         'page_range': paginas,
@@ -76,9 +57,7 @@ def buscar(request):
     else:
         isPaginated = True
 
-    contexto = {
-        'datos': obtenerDatos(),
-        'categorias': listarCategorias(),        
+    contexto = {       
         'listaposts': listaposts,
         'busqueda': busqueda,
         'current_page': current_page,

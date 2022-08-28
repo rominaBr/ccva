@@ -5,9 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from .models import Post
+from .models import Post, Comentarios
 from .forms import PostForm, ComentForm
-from administracion.views import obtenerDatos, listarCategorias
 import random
 
 def consulta(id):
@@ -17,14 +16,41 @@ def consulta(id):
 class DetallePost(DetailView):
     def get(self, request, slug, *args, **kwargs):
         post = get_object_or_404(Post, slug = slug)
+        if request.method == 'GET':
+            form = ComentForm()
 
-        form = ComentForm()
+            comentarios = Comentarios.objects.filter(post=post).order_by('-creado')
+        else:
+            form = ComentForm()
+
+        contexto = {
+            'post': post,  
+            'form': form,
+            'comentarios': comentarios,      
+        }
+        return render(request, 'post.html',contexto)
+
+    def post(self, request, slug, *args, **kwargs):
+        post = Post.objects.get(slug = slug)
+        if request.method == 'POST':
+            form = ComentForm(request.POST)
+
+            comentarios = Comentarios.objects.filter(post=post).order_by('-creado')
+
+            if form.is_valid():
+                nuevo_coment = form.save(commit=False)
+                nuevo_coment.autor = request.user
+                nuevo_coment.post = post
+                nuevo_coment.save()
+                messages.success(request, 'Comentario enviado')
+        else:
+            form = ComentForm()
+        
 
         contexto = {
             'post': post,
-            'datos': obtenerDatos(), 
-            'categorias': listarCategorias(),    
-            'form': form      
+            'form': form, 
+            'comentarios': comentarios,   
         }
         return render(request, 'post.html',contexto)
 
@@ -78,8 +104,6 @@ class Inicio(ListView):
             'post2': idpost2,
             'post3': idpost3,
             'post4': idpost4,
-            'datos': obtenerDatos(),
-            'categorias': listarCategorias(),
         }            
          
         return render(request, 'index.html', contexto)
@@ -102,8 +126,6 @@ def crear_post(request):
     else:
         form = PostForm()
     context = {
-            'datos': obtenerDatos(),
-            'categorias': listarCategorias(),
             'form': form,
         }
     
@@ -116,14 +138,6 @@ class ListarTodosLosPosts(ListView):
     context_object_name = 'listaposts'
     template_name = 'posts.html'
     paginate_by = 3
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['datos'] = obtenerDatos()
-        context['categorias'] = listarCategorias()
-        
-        return context
 
 
 class AddLike(LoginRequiredMixin, View):

@@ -1,5 +1,5 @@
 from django.urls import path
-from administracion.views import elegirPorCategoria,  buscar, obtenerDatos, listarCategorias
+from administracion.views import elegirPorCategoria,  buscar
 from .views import DetallePost, ListarTodosLosPosts, AddDislike, AddLike
 from . import views
 

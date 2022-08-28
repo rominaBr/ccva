@@ -2,13 +2,12 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
-from administracion.views import obtenerDatos, listarCategorias
 from cuentas.views import UserEditForm
 from . import views
 
 urlpatterns = [    
     path('registro/', views.register, name='registro'),
-    path('login/', LoginView.as_view(template_name='login.html',extra_context={'datos':obtenerDatos, 'categorias': listarCategorias}), name='login'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('perfil/', UserEditForm.as_view(), name='perfil'),
     
