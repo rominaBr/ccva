@@ -3,9 +3,9 @@ from .base import *
 
 DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ['https://camaracomerciovillaangela/'] 
+CSRF_TRUSTED_ORIGINS = ['https://camaracomerciovillaangela.herokuapp.com/'] 
 
-ALLOWED_HOSTS = ['camaracomerciovillaangela']
+ALLOWED_HOSTS = ['camaracomerciovillaangela.herokuapp.com']
 
 DATABASES = {    
     'postgresql':
