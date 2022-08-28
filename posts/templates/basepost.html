@@ -21,26 +21,24 @@
             {% endif %}
             <div class="p-2">
                 <form class="form-horinzontal" action="{% url 'posts:like' post.id %}" method="post">
-                    <span class="text-xs">{{ post.likes.all.count }} Likes</span>
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
-                        <i class="fa-regular fa-thumbs-up fa-2"></i>
+                        {{ post.likes.all.count }} <i class="fa-regular fa-thumbs-up fa-2"></i>
                     </button>
                 </form>
             </div>
             <div class="p-2">
                 <form class="form-horinzontal" action="{% url 'posts:dislike' post.id %}" method="post">
-                    <span class="text-xs">{{ post.dislikes.all.count }} Dislikes</span>
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
-                        <i class="fa-regular fa-thumbs-down fa-2"></i>
+                        {{ post.dislikes.all.count }} <i class="fa-regular fa-thumbs-down fa-2"></i>
                     </button>
                 </form>
             </div>
             <div class="p-2">
-                <span class="text-xs">Comentar</span>
+                
                 <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComentario">
                     <i class="fa-regular fa-message"></i>
                 </button>

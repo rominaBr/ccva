@@ -18,7 +18,7 @@
                     {% csrf_token %}              
                     {{form | crispy }}
                     <button class="btn btn-info redondeado" type="submit">Editar</button>            
-                    <a href="{% url 'posts:detalle_post' post.slug %}" class="btn btn-secondary redondeado">Cancelar</a>
+                    <a href="{% url 'posts:detalle_post' object.post.slug %}" class="btn btn-secondary redondeado">Cancelar</a>
                 </form>              
               
             </div>
