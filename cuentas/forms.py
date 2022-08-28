@@ -15,14 +15,14 @@ class UserRegisterForm(UserCreationForm):
         help_texts = {k:"" for k in fields}
 
 class EditarPerfil(forms.ModelForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    descripcion = forms.CharField(widget=forms.Textarea())
+    first_name = forms.CharField(widget=forms.TextInput(),label='Nombre', required=False)
+    last_name = forms.CharField(widget=forms.TextInput(),label='Apellido', required=False)
+    descripcion = forms.CharField(widget=forms.Textarea(),required=False)
     foto = forms.ImageField(required=True)
-    web = forms.URLField()
-    facebook = forms.URLField()
-    twitter = forms.URLField()
-    instagram = forms.URLField()
+    web = forms.URLField(required=False)
+    facebook = forms.URLField(required=False)
+    twitter = forms.URLField(required=False)
+    instagram = forms.URLField(required=False)
 
     class Meta:
         model = Perfil

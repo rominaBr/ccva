@@ -13,7 +13,7 @@
         <div class="card-body">
             <form class="" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.media }}
+                {{ form.media }}                
                 {{ form | crispy }}
                 <button class="btn btn-info redondeado" type="submit">Modificar</button>
                 <a href="{% url 'base:index' %}" class="btn btn-secondary redondeado" type="button">Cancelar</a>
@@ -25,3 +25,4 @@
 
 
 {% endblock %}
+

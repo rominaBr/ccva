@@ -48,7 +48,7 @@ def editarPerfil(request):
     user = request.user.id
     perfil = Perfil.objects.get(user__id=user)
     info_basica_usuario = User.objects.get(id = user)
-    print(info_basica_usuario.first_name)
+    
     if request.method == 'POST':
         form = EditarPerfil(request.POST, request.FILES, instance=perfil) 
 
@@ -56,15 +56,17 @@ def editarPerfil(request):
             info_basica_usuario.first_name = form.cleaned_data.get('first_name')
             info_basica_usuario.last_name = form.cleaned_data.get('last_name')
             
+            
             perfil.foto = form.cleaned_data.get('foto')
             perfil.descripcion = form.cleaned_data.get('descripcion')
             perfil.web = form.cleaned_data.get('web')
             perfil.facebook = form.cleaned_data.get('facebook')
             perfil.twitter = form.cleaned_data.get('twitter')
 
-            info_basica_usuario.save()
-            perfil.save()           
             
+            perfil.save()           
+            info_basica_usuario.save()
+
             
             return redirect('cuentas:perfil', username = request.user.username)
 
@@ -72,6 +74,7 @@ def editarPerfil(request):
         form = EditarPerfil(instance=perfil)
         
     context = {
+        'first_name': info_basica_usuario.first_name,
         'form': form,
 
     }
