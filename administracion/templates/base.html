@@ -162,5 +162,8 @@
 
 <script src="{% static 'js/main.js' %}"></script>
 
-
+<script>        
+  document.getElementById("id_first_name").value = "{{ user.first_name }}";
+  document.getElementById("id_last_name").value = "{{ user.last_name }}";
+</script>
 </html>
