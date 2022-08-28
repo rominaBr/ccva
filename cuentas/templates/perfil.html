@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block titulo %}Perfil de {{ user }}{% endblock titulo %}
+{% block titulo %}Perfil de {{ userPerfil }}{% endblock titulo %}
 
 {% block content %}
 
 
 <div class="container d-flex justify-content-center">
     <div class="card border-info col-12 mb-3" style="max-width: 48rem;">
-        <div class="card-header">Perfil de {{ user }}</div>
+        <div class="card-header">Perfil de {{ userPerfil }}</div>
         <div class="card-body">
           <article class="card h-100 bg-secondary">
                 <div class="card-body">
@@ -17,7 +17,7 @@
                         <div class="ps-3">
                             <h6 class="m-0">{{ perfil.user.email }}</h6>
                             {% if user.first_name != None and user.last_name != None %}
-                            <p class="p-0 h6">{{ user.first_name }} {{ user.last_name }}</p>
+                            <p class="p-0 h6">{{ userPerfil.first_name }} {{ userPerfil.last_name }}</p>
                             {% endif %}
                             {% if perfil.descripcion != null %}
                             <p>{{ perfil.descripcion }} </p>
@@ -50,7 +50,7 @@
                         {% endif %}
                     </p>   
                 </div>
-                {% if request.user == user %}
+                {% if request.user == userPerfil %}
                     <a href="{% url 'cuentas:modificarperfil' %}" class="btn btn-info" type="button">Modificar</a>
                 {% endif %}
             </article>
