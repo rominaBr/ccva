@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import  DetailView, ListView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import  DetailView, ListView, CreateView, DeleteView, UpdateView
 from django.views.generic.base import View
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -52,7 +53,9 @@ class DetallePost(DetailView):
             'form': form, 
             'comentarios': comentarios,   
         }
+        
         return render(request, 'post.html',contexto)
+        
 
 class Inicio(ListView):
 
@@ -195,3 +198,125 @@ class AddDislike(LoginRequiredMixin, View):
 
         next = request.POST.get('next','/')
         return HttpResponseRedirect(next)      
+
+class AddComentLike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        comentario = Comentarios.objects.get(pk = pk)
+
+        is_dislike = False
+        for dislike in comentario.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if is_dislike:
+            comentario.dislikes.remove(request.user)
+
+        is_like = False
+        for like in comentario.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            comentario.likes.add(request.user)
+
+        if is_like:
+            comentario.likes.remove(request.user)
+
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)
+
+class AddComentDislike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        comentario = Comentarios.objects.get(pk = pk)
+
+        is_like = False
+        for like in comentario.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            comentario.likes.remove(request.user)
+
+        is_dislike = False
+        for dislike in comentario.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            comentario.dislikes.add(request.user)
+
+        if is_dislike:
+            comentario.dislikes.remove(request.user)
+
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)      
+
+class ResponderComentario(LoginRequiredMixin, View):
+    def post(self, request, slug, pk, *arg, **kwargs):
+        post = Post.objects.get(slug = slug)
+        parent_coment = Comentarios.objects.get(pk = pk)
+        form = ComentForm(request.POST)
+
+        if form.is_valid():
+            nuevo_coment = form.save(commit=False)
+            nuevo_coment.autor = request.user
+            nuevo_coment.post = post
+            nuevo_coment.parent = parent_coment
+            nuevo_coment.save()
+
+        return redirect('posts:detalle_post',slug=slug)
+
+
+class BorrarComentario(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comentarios
+    template_name = 'borrarcomentario.html'
+
+    def get_success_url(self):
+        slug = self.kwargs['slug']
+        return reverse_lazy('posts:detalle_post', kwargs={'slug': slug})
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.autor
+
+class EditarComentario(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comentarios
+    fields = ['comentario']
+    template_name = 'editarcomentario.html'    
+
+    def get_success_url(self):
+        slug = self.kwargs['slug']
+        return reverse_lazy('posts:detalle_post', kwargs={'slug':slug})
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.autor
+
+
+class EditarPost(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model=Post
+    fields=['titulo', 'categoria', 'contenido','imagen_referencial']
+    template_name='editarpost.html'
+
+    def get_success_url(self):
+        slug = self.kwargs['slug']
+        return reverse_lazy('posts:detalle_post', kwargs={'slug':slug})
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.autor
+
+
+
+class BorrarPost(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model=Post
+    template_name='borrarpost.html'
+    success_url = reverse_lazy('base:index')
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.autor

@@ -69,7 +69,8 @@ def buscar(request):
     return render(request, 'busqueda.html',contexto)
 
 
-
+def mision_and_vision (request):
+    return render (request, "mision_vision.html")
 
 
 

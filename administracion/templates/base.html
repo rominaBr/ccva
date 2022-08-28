@@ -75,14 +75,12 @@
                 <a href="" class="nav-link dropdown-toggle" aria-current="page" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">Sobre Nosotros</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a href="" class="dropdown-item">Misión y Visión</a></li>
+                  <li><a href="{% url 'base:mision_and_vision' %}" class="dropdown-item">Misión y Visión</a></li>
                   <li><a href="" class="dropdown-item">Historia</a></li>
                   <li><a href="" class="dropdown-item">Miembros</a></li>
                 </ul>
-              </li>
-              <li class="nav-item nav_hover">
-                <a href="" class="nav-link active" aria-current="page">Item 2</a>
-              </li>          
+              </li>             
+                       
             </ul>
           </div>
           <div class="ms-auto p-2 bd-highlight">
@@ -101,7 +99,7 @@
                   <li><a class="dropdown-item" href="{% url 'posts:nuevo' %}">Nuevo Post</a></li>
                   {% endif %}
                   <li><a class="dropdown-item" href="{% url 'cuentas:perfil' %}">Perfil</a></li>
-                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{% url 'cuentas:logout' %}">Cerrar sesión</a></li>
                 </ul>
@@ -163,7 +161,6 @@
 <script src="{% static 'js/aos.js' %}"></script>
 
 <script src="{% static 'js/main.js' %}"></script>
-
 
 
 </html>

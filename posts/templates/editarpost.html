@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block titulo %}Editar Post{% endblock titulo %}
+
+
+<!-- main content -->
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+          <h4>Editar Post</h4>
+        </div>
+        <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}       
+                {{ form.media }}       
+                {{form | crispy }}
+                <button class="btn btn-danger redondeado" type="submit">Editar</button>            
+                <a href="{% url 'posts:detalle_post' post.slug %}" class="btn btn-secondary redondeado">Cancelar</a>
+            </form>              
+          
+        </div>
+      </div>
+</div>
+    
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Borrar Comentario{% endblock titulo %}
+
+
+<!-- main content -->
+{% block content %}
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+              <h4>Borrar Comentario</h4>
+            </div>
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h5 class="card-text mb-3">¿Está seguro que desea borrar el comentario?</h5>
+                    <button class="btn btn-danger redondeado" type="submit">Borrar</button>            
+                    <a href="{% url 'posts:detalle_post' object.post.slug %}" class="btn btn-secondary redondeado">Cancelar</a>
+                </form>              
+              
+            </div>
+          </div>
+    </div>
+    
+{% endblock content %}
+
+
+

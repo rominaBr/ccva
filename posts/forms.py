@@ -12,7 +12,15 @@ class PostForm(forms.ModelForm):
 
 class ComentForm(forms.ModelForm):
   
-
+    comentario = forms.CharField(
+        widget = forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'rows': 5,
+                'placeholder': 'Escriba comentario',
+            }),
+        required=True
+    ),
     class Meta:
         model=Comentarios
         fields= ['comentario']

@@ -1,9 +1,24 @@
 {% block basepost %}
 {% load crispy_forms_tags %}
+{% load humanize %}
 
-<div class="p-4" x-data="{open:false}">
+<div class="p-4">
     <div class="col-12 border border-1 border-primary p-2 rounded-3">
         <div class="d-flex flex-row bd-highlight align-items-center">
+            {% if request.user == post.autor %}
+            <div class="p-2">                
+                <a href="{% url 'posts:editarpost' post.slug %}" class="btn btn-outline-primary redondeado" type="button">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+                
+            </div>
+            <div class="p-2">
+                <a href="{% url 'posts:borrarpost' post.slug %}" class="btn btn-outline-primary redondeado" type="button">
+                    <i class="fa-regular fa-trash-can"></i>
+                </a>
+                
+            </div>
+            {% endif %}
             <div class="p-2">
                 <form class="form-horinzontal" action="{% url 'posts:like' post.id %}" method="post">
                     <span class="text-xs">{{ post.likes.all.count }} Likes</span>
@@ -26,47 +41,178 @@
             </div>
             <div class="p-2">
                 <span class="text-xs">Comentar</span>
-                <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="button" data-bs-toggle="modal" data-bs-target="#modalComentario">
+                <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComentario">
                     <i class="fa-regular fa-message"></i>
                 </button>
-            </div>
-            
+            </div>           
             
           </div>
     </div>
+    <div class="collapse" id="collapseComentario">
+        <div class="card-body">
+            <form action="" method="post">
+                {% csrf_token %}                                                 
+                {{ form | crispy }}
+                <button type="submit" class="btn btn-primary redondeado">Publicar</button>
+            </form>
+        </div>        
+    </div>
+</div>
+
+<div class="container">
+    {% for coment in comentarios %}
+    {% if coment.is_parent %}
+    <div class="row mb-3">
+        <div class="col-12">            
+            
+            <article class="card h-100 border border-1 border-info">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        
+                        <img src="{{ coment.autor.perfil.foto.url }}" alt="" width="60px" class="border border-info border-3 rounded-circle">
+                            <div class="ps-3">
+                                <h6 class="m-0">{{coment.autor}}</h6>
+                                <p class="p-0 h6">{{coment.creado | naturaltime }}</p>
+                            </div>
+                        </div>
+                    <div class="">                                
+                        <p class="fs-6 lh-1">{{coment.comentario}}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    {% if request.user == coment.autor %}
+                        <div class="d-flex align-items-end p-1">
+                            <a href="{% url 'posts:editarcomentario' post.slug coment.id %}" class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="d-flex align-items-end p-1">
+                            <a href="{% url 'posts:borrarcomentario' post.slug coment.id %}" class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="d-flex align-items-end p-1">
+                        <form class="form-horinzontal" action="{% url 'posts:comentlike' post.slug coment.pk %}" method="post">
+                            
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                <span class="text-xs">{{ coment.likes.all.count }}</span>
+                                <i class="fa-regular fa-thumbs-up fa-2"></i>
+                                
+                            </button>
+                        </form>
+                    </div>
+                    <div class="d-flex align-items-end p-1">
+                        <form class="form-horinzontal" action="{% url 'posts:comentdislike' post.slug coment.pk %}" method="post">                            
+                            
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                <span class="text-xs">{{ coment.dislikes.all.count }}</span>
+                                <i class="fa-regular fa-thumbs-down fa-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                    
+                        <div class="d-flex align-items-end p-1">
+                            <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseResponderComentario{{coment.pk}}">
+                                <i class="fa-regular fa-message"></i>
+                            </button>
+                        </div>
+                    
+                    
+                </div>        
+            </article>  
+                 
+        </div>
+        
+        <div class="collapse" id="collapseResponderComentario{{coment.pk}}">
+            <div class="card-body">
+                <form action="{% url 'posts:respondercoment' post.slug coment.id %}" method="post">
+                    {% csrf_token %}                                                 
+                    {{ form | crispy }}
+                    <button type="submit" class="btn btn-primary redondeado">Publicar</button>
+                </form>
+            </div>               
+        </div>    
+
+    </div>
+    <div class="d-flex flex-row-reverse mb-3">
+        <div class="col-11">
+            {% for child_comment in coment.children %}
+            <div class="mb-3">
+                <article class="card h-100 border border-1 border-info">
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            
+                            <img src="{{ child_comment.autor.perfil.foto.url }}" alt="" width="60px" class="border border-info border-3 rounded-circle">
+                                <div class="ps-3">
+                                    <h6 class="m-0">{{child_comment.autor}}</h6>
+                                    <p class="p-0 h6">{{child_comment.creado | naturaltime }}</p>
+                                </div>
+                            </div>
+                        <div class="">                                
+                            <p class="fs-6 lh-1">{{child_comment.comentario}}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        {% if request.user == child_comment.autor %}
+                            <div class="d-flex align-items-end p-1">
+                                <a href="{% url 'posts:editarcomentario' post.slug child_comment.id %}" class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </div>
+                            
+                            <div class="d-flex align-items-end p-1">
+                                <a href="{% url 'posts:borrarcomentario' post.slug child_comment.id %}" class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="d-flex align-items-end p-1">
+                            <form class="form-horinzontal" action="{% url 'posts:comentlike' post.slug child_comment.pk %}" method="post">
+                                
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                    <span class="text-xs">{{ child_comment.likes.all.count }}</span>
+                                    <i class="fa-regular fa-thumbs-up fa-2"></i>
+                                    
+                                </button>
+                            </form>
+                        </div>
+                        <div class="d-flex align-items-end p-1">
+                            <form class="form-horinzontal" action="{% url 'posts:comentdislike' post.slug child_comment.pk %}" method="post">                            
+                                
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button class="btn btn-outline-primary redondeado {% if not user.is_authenticated %} disabled{% endif %}" type="submit">
+                                    <span class="text-xs">{{ child_comment.dislikes.all.count }}</span>
+                                    <i class="fa-regular fa-thumbs-down fa-2"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                       
+                        
+                    </div>        
+                </article>  
+            </div>
+            {% endfor %}
+        </div>  
+    </div>
+    
+    {% endif %}
+    {% endfor %}
+    
 </div>
 
 
-{% for coment in comentarios %}
-    <code>{{coment.comentario}} </code>   
-    
-{% endfor %}
-    
     
 
-<!-- Modal -->
-<div class="modal fade" id="modalComentario" tabindex="-1" aria-labelledby="modalComentarioLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalComentarioLabel">Escribir comentario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="" method="post">
-            <div class="modal-body">                
-                {% csrf_token %}
-                {{ form.media }}                                  
-                {{ form | crispy }}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary redondeado" data-bs-dismiss="modal">Salir</button>
-                <button type="submit" id="botonVentanaModal" class="btn btn-primary redondeado">Guardar</button>
-            </div>
-        </form>
-    
-      </div>
-    </div>
-  </div>
 
 {% endblock %}
 

@@ -1,4 +1,5 @@
 import os
+from tkinter import N
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
@@ -67,12 +68,23 @@ pre_save.connect(url_creada, sender=Post)
 
 
 class Comentarios(models.Model):
-    comentario = RichTextField('Comentario')
+    comentario = models.TextField('Comentario')
     creado = models.DateTimeField('Fecha de publicación', auto_now = False, auto_now_add = True)
     autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='autor_comentario')
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, blank= True, related_name='likes_comentario')
     dislikes = models.ManyToManyField(User, blank= True, related_name='dislikes_comentario')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank= True, null= True, related_name='+')
+
+    @property
+    def children(self):
+        return Comentarios.objects.filter(parent=self).order_by('-creado').all()
+
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True
+        return False
 
     class Meta:
         verbose_name = 'Comentario'

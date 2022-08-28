@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
 {% block titulo %} {{ post.titulo |upper }} | CCVA {% endblock titulo %}
 
 {% block content %}
@@ -14,16 +16,9 @@
                     <span class="post-category text-white bg-info mb-3">{{ post.categoria }}</span>
                     <h1 class="mb-4 texto-borde">{{ post.titulo |upper }}</h1>
                     <div class="post-meta align-items-center text-center">
-                        
-                            {% if post.autor.foto.url != null %}
-                                <figure class="author-figure mb-0 mr-3 d-inline-block">
-                                    <img src="{{ post.autor.perfil.foto.url }}" alt="Image" class="img-fluid">
-                                </figure>
-                            {% else %}
-                                <figure class="author-figure mb-0 mr-3 d-inline-block">
-                                    <img src="{% static 'imagenes/perfilsinfoto.png' %}" alt="Image" class="img-fluid">
-                                </figure>
-                            {% endif %}
+                        <figure class="author-figure mb-0 mr-3 d-inline-block">
+                            <img src="{{ post.autor.perfil.foto.url }}" alt="Image" class="img-fluid">
+                        </figure>                          
                         
                         <span class="d-inline-block mt-1 texto-borde">{{ post.autor }}</span>
                         <span class="texto-borde">{{ post.fecha_publicacion }}</span>
@@ -31,6 +26,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
 

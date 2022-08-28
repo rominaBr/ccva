@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<title>{% block titulo %}Misión y Visión{% endblock titulo%}</title>
+
+{% block content %}
+  
+  <div class="row justify-content-around">
+    <div class="col-sm-5 mx-5">
+      <div class="card mx-5">
+        <div class="card-header">
+          <h1 class="text-center">Misión</h1>
+          <p>{{datos.mision}}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-5 mx-5">
+        <div class="card mx-5">
+          <div class="card-header">
+            <h1 class="text-center">Visión</h1>
+            <p>{{datos.vision}}</p>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+{% endblock %}
+
+
+{% block footer%}
+
+{% endblock %}
