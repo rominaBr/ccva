@@ -59,8 +59,10 @@
                             <img src="{% static 'imagenes/perfilsinfoto.png' %}" alt="Image Placeholder" class="img-fluid mb-2 mt-5">
                         {% endif %}
                         <div class="bio-body">
-                            <h2>{{ post.autor }}</h2>
+                            <h2><a href="{% url 'cuentas:perfil' post.autor %}">{{ post.autor }}</a></h2>
+                            {% if post.autor.perfil.descripcion != None%}
                             <p class="mb-4">{{ post.autor.perfil.descripcion }}</p>
+                            {% endif %}
                             <p class="social mb-3">
                                 {% if post.autor.perfil.facebook == null %}
                                     <i class="fa-brands fa-facebook p-2 fa-2x"></i>

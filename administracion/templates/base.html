@@ -98,7 +98,7 @@
                   <li><a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">Administración</a></li>
                   <li><a class="dropdown-item" href="{% url 'posts:nuevo' %}">Nuevo Post</a></li>
                   {% endif %}
-                  <li><a class="dropdown-item" href="{% url 'cuentas:perfil' %}">Perfil</a></li>
+                  <li><a class="dropdown-item" href="{% url 'cuentas:perfil' user.username %}">Perfil</a></li>
                   
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{% url 'cuentas:logout' %}">Cerrar sesión</a></li>

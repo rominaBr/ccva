@@ -1,13 +1,62 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block titulo %}Editar Perfil{% endblock titulo %}
+{% block titulo %}Perfil de {{ user }}{% endblock titulo %}
 
-<h1>Editar perfil</h1>
-<div class="form-group">
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form | crispy}}
-        <button class="btn btn-secondary">Enviar</button>
-    </form>
+{% block content %}
+
+
+<div class="container d-flex justify-content-center">
+    <div class="card border-info mb-3" style="max-width: 48rem;">
+        <div class="card-header">Perfil de {{ user }}</div>
+        <div class="card-body">
+          <article class="card h-100 bg-secondary">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <img src="{{ perfil.foto.url }}" alt="" width="60px" class="border border-secondary border-3 rounded-circle">
+                        <div class="ps-3">
+                            <h6 class="m-0">{{ perfil.user.email }}</h6>
+                            {% if user.first_name != None and user.last_name != None %}
+                            <p class="p-0 h6">{{ user.first_name }} {{ user.last_name }}</p>
+                            {% endif %}
+                            {% if perfil.descripcion != null %}
+                            <p>{{ perfil.descripcion }} </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p class="social mb-3">
+                        {% if perfil.facebook == null %}
+                            <i class="fa-brands fa-facebook p-2 fa-lg"></i>
+                        {% else %}
+                            <a href="{{ perfil.facebook }}" class="p-2"><i class="fa-brands fa-facebook fa-lg"></i></a>
+                        {% endif %}
+                        {% if perfil.twitter == null %}                               
+                            <i class="fa-brands fa-twitter p-2 fa-lg" ></i>
+                        {% else %}
+                            <a href="{{ perfil.twitter }}" class="p-2"><i class="fa-brands fa-twitter fa-lg"></i></a>
+                        {% endif %}
+                        {% if perfil.instagram == null %}
+                            <i class="fa-brands fa-instagram p-2 fa-lg"></i>
+                        {% else %}
+                            <a href="{{ perfil.instagram }}" class="p-2"><i class="fa fa-instagram fa-lg"></i></a>
+                        {% endif %}
+                        {% if perfil.web == null %}
+                            <i class="fa-solid fa-link p-2 fa-lg"></i>
+                        {% else %}
+                            <a href="{{ perfil.web }}" class="p-2"><i class="fa-solid fa-link fa-lg"></i></a>
+                        {% endif %}
+                    </p>   
+                </div>
+                {% if request.user == user %}
+                    <a href="{% url 'cuentas:modificarperfil' %}" class="btn btn-info" type="button">Modificar</a>
+                {% endif %}
+            </article>
+        </div>
+    </div>
 </div>
+
+
+{% endblock %}

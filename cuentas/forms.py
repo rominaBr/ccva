@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from cuentas.models import Perfil
 
 
 class UserRegisterForm(UserCreationForm):
@@ -13,3 +14,17 @@ class UserRegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
         help_texts = {k:"" for k in fields}
 
+class EditarPerfil(forms.ModelForm):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    descripcion = forms.CharField(widget=forms.Textarea())
+    foto = forms.ImageField(required=True)
+    web = forms.URLField()
+    facebook = forms.URLField()
+    twitter = forms.URLField()
+    instagram = forms.URLField()
+
+    class Meta:
+        model = Perfil
+        fields = ('first_name', 'last_name', 'foto', 'descripcion', 'web', 'facebook', 'twitter', 'instagram')
+    

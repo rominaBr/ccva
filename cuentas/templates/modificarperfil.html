@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block titulo %}Modificar perfil de {{ user }}{% endblock titulo %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card p-5">
+        <div class="card-header">
+            <h5>Modificar</h5>
+        </div>
+        <div class="card-body">
+            <form class="" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form | crispy }}
+                <button class="btn btn-info redondeado" type="submit">Modificar</button>
+                <a href="{% url 'base:index' %}" class="btn btn-secondary redondeado" type="button">Cancelar</a>
+            </form>  
+        </div>
+         
+    </div>
+</div>
+
+
+{% endblock %}
