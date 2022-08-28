@@ -69,7 +69,7 @@
                         
                         <img src="{{ coment.autor.perfil.foto.url }}" alt="" width="60px" class="border border-info border-3 rounded-circle">
                             <div class="ps-3">
-                                <h6 class="m-0">{{coment.autor}}</h6>
+                                <h6 class="m-0"><a href="{% url 'cuentas:perfil' coment.autor %}">{{coment.autor}}</a></h6>
                                 <p class="p-0 h6">{{coment.creado | naturaltime }}</p>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                             
                             <img src="{{ child_comment.autor.perfil.foto.url }}" alt="" width="60px" class="border border-info border-3 rounded-circle">
                                 <div class="ps-3">
-                                    <h6 class="m-0">{{child_comment.autor}}</h6>
+                                    <h6 class="m-0"><a href="{% url 'cuentas:perfil' child_comment.autor %}">{{child_comment.autor}}</a></h6>
                                     <p class="p-0 h6">{{child_comment.creado | naturaltime }}</p>
                                 </div>
                             </div>

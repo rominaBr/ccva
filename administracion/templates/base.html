@@ -87,7 +87,7 @@
             <ul class="navbar-nav flex-wrap flex-wrap">
               {% if user.is_authenticated %}
               <li class="nav-item mx-2 mt-2">
-                {{user}}
+                <a class="sin-decoracion" href="{% url 'cuentas:perfil' user %}"><b>{{user}}</b></a>
               </li>
               <li class="nav-item dropdown mx-2 mt-2">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
