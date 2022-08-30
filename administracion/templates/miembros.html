@@ -9,11 +9,11 @@
     <h3>Miembros de la Cámara de Comercio de Villa Ángela</h3>
     
     <main class="container d-flex aling-center">
-        
+        <div class="row">
         {% for m in listamiembros %}
-        <div class="row p-2"> 
+        <div class="col-12 mb-2"> 
             
-            <div class="col-6 col-lg-12 p-2">
+           
                 
                 <article class="card h-100 border border-info">
                     <div class="card-body">
@@ -28,8 +28,9 @@
                 </article>
                 
             </div>                
-        </div>
+        
         {% endfor %}
+    </div>
     </main>
 </div>
 {% endblock %}
