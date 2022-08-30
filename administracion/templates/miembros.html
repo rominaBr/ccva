@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}Miembros{% endblock titulo %}
+
+{% block content %}
+
+<div class="container">
+
+    <h3>Miembros de la Cámara de Comercio de Villa Ángela</h3>
+    
+    <main class="container d-flex aling-center">
+        
+        {% for m in listamiembros %}
+        <div class="row p-2"> 
+            
+            <div class="col-6 col-lg-12 p-2">
+                
+                <article class="card h-100 border border-info">
+                    <div class="card-body">
+                        <div class="mb-3 d-flex">
+                            <img src="{{ m.foto.url }}" alt="" width="60px" height="60px" class="border border-secondary border-3 rounded-circle">
+                                <div class="ps-3">
+                                    <h5 class="m-0">{{m.nombre}} {{m.apellido}}</h5>
+                                    <p class="p-0 h6">{{ m.cargo }}</p>
+                                </div>
+                        </div>
+                    </div>
+                </article>
+                
+            </div>                
+        </div>
+        {% endfor %}
+    </main>
+</div>
+{% endblock %}

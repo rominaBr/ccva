@@ -65,3 +65,10 @@ class Miembros(ModeloBase):
 
     def __str__(self):
         return f'{self.nombre} {self.apellido} ({self.cargo})'
+
+
+
+class Enviar_Email_to (models.Model):
+    asunto = models.CharField (max_length=50)
+    email = models.EmailField (max_length=200)
+    mensaje = models.TextField ()

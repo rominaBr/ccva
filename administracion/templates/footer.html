@@ -10,7 +10,7 @@
       <!--Grid row-->
       <div class="row mt-4">
         <!--Grid column-->
-        <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
           <h5 class="text-uppercase mb-4">Sobre nosotros</h5>  
   
           <p>
@@ -24,32 +24,10 @@
         </div>
         <!--Grid column-->
   
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">    
-            <h5 class="text-uppercase mb-4">redes sociales</h5>        
-            <div class="mt-4">
-                <!-- Facebook -->
-                {% if datos.facebook != None %}
-                    <a type="button" href="{{datos.facebook}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-facebook-f"></i></a>
-                
-                {% endif %}
-                {% if datos.instagram != None %}
-                <!-- Instagram -->
-                    <a type="button" href="{{datos.instagram}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-instagram"></i></a>
-                
-                {% endif %}
-                {% if datos.twitter != None %}
-                <!-- Twitter -->
-                    <a type="button" href="{{datos.twitter}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-twitter"></i></a>
-                
-                {% endif %}
-              </div>
-          
-        </div>
-        <!--Grid column-->
+
   
         <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <h5 class="text-uppercase mb-4">Contacto</h5>
           <ul class="fa-ul" style="margin-left: 1.65em;">
             <li class="mb-3">
@@ -65,6 +43,31 @@
           
         </div>
         <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">    
+                  <h5 class="text-uppercase mb-4">redes sociales</h5>        
+                  <div class="mt-4">
+                      <!-- Facebook -->
+                      {% if datos.facebook != None %}
+                          <a type="button" href="{{datos.facebook}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-facebook-f"></i></a>
+                      
+                      {% endif %}
+                      {% if datos.instagram != None %}
+                      <!-- Instagram -->
+                          <a type="button" href="{{datos.instagram}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-instagram"></i></a>
+                      
+                      {% endif %}
+                      {% if datos.twitter != None %}
+                      <!-- Twitter -->
+                          <a type="button" href="{{datos.twitter}}" class="btn btn-floating btn-primary btn-lg"><i class="fab fa-twitter"></i></a>
+                      
+                      {% endif %}
+                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.633876875544!2d-60.7162495848826!3d-27.573871027742907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9447a9cef090975d%3A0xbd0d2be67978680a!2sAv.%20Uruguay%20171%2C%20Villa%20Angela%2C%20Chaco!5e0!3m2!1ses!2sar!4v1661895724427!5m2!1ses!2sar" width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    
+              </div>
+              <!--Grid column-->
       </div>
       <!--Grid row-->
     </div>

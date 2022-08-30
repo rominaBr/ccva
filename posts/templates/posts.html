@@ -9,7 +9,8 @@
     <div class="container">
     
         {% for p in listaposts %}
-        {% if forloop.first %} <div class="row align-items-stretch retro-layout mt-3"> {% endif %}
+        {% if forloop.first %}
+        <div class="row align-items-stretch retro-layout mt-3"> {% endif %}
             <div class="col-lg-4 col-sm-4 mt-3 mb-3">
                 <a href="{% url 'posts:detalle_post' p.slug %}" class="hentry v-height img-2 ml-auto"
                     style="background-image: url({{ p.imagen_referencial.url }});">

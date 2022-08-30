@@ -17,7 +17,7 @@
                     <h1 class="mb-4 texto-borde">{{ post.titulo |upper }}</h1>
                     <div class="post-meta align-items-center text-center">
                         <figure class="author-figure mb-0 mr-3 d-inline-block">
-                            <img src="{{ post.autor.perfil.foto.url }}" alt="Image" class="img-fluid">
+                            <img src="{{ post.autor.perfil.foto.url }}" alt="Image" width="40px" height="40px">
                         </figure>                          
                         
                         <span class="d-inline-block mt-1 texto-borde">{{ post.autor }}</span>
@@ -54,7 +54,7 @@
                 <div class="sidebar-box" style="background-color: #0257ad; border-radius: 40px;">
                     <div class="bio text-center">
                         {% if post.autor.perfil.foto.url != null %}
-                            <img src="{{ post.autor.perfil.foto.url }}" alt="Image Placeholder" class="img-fluid mb-2 mt-5">
+                            <img src="{{ post.autor.perfil.foto.url }}" alt="Image Placeholder" width="150px" height="150px" class="mb-2 mt-5">
                         {% else %}
                             <img src="{% static 'imagenes/perfilsinfoto.png' %}" alt="Image Placeholder" class="img-fluid mb-2 mt-5">
                         {% endif %}
