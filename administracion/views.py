@@ -4,8 +4,6 @@ from .models import Categoria
 from posts.models import Post
 
 
-
-
 def elegirPorCategoria(request, pk):    
     
     try:
@@ -70,6 +68,7 @@ def buscar(request):
 
 def mision_and_vision (request):
     return render (request, "mision_vision.html")
+
 
 
 

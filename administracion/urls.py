@@ -4,5 +4,6 @@ from .views import mision_and_vision
 
 urlpatterns = [
     path('', Inicio.as_view(), name='index'), 
-    path ('mision_and_vision/', mision_and_vision, name='mision_and_vision'),   
+    path('mision_and_vision/', mision_and_vision, name='mision_and_vision'),
+    
 ]

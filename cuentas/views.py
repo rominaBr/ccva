@@ -89,4 +89,5 @@ class PerfilDeUsuario(View):
             'userPerfil': user,
             'perfil': perfil,
         }
+        print(perfil.instagram)
         return render(request, 'perfil.html', context)

@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from .models import Post, Comentarios
 from .forms import PostForm, ComentForm
 import random
+from administracion.services import get_dolar
 
 def consulta(id):
     return Post.objects.get(id = id)
@@ -59,6 +60,8 @@ class DetallePost(DetailView):
 
 class Inicio(ListView):
 
+    
+
     def get(self, request, *args, **kwargs):
 
         postsaux = list(Post.objects.filter(
@@ -107,8 +110,9 @@ class Inicio(ListView):
             'post2': idpost2,
             'post3': idpost3,
             'post4': idpost4,
+            'dolar': get_dolar,
         }            
-         
+        
         return render(request, 'index.html', contexto)
 
 def crear_post(request):

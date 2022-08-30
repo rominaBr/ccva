@@ -1,0 +1,23 @@
+{% block dolar %}
+
+<marquee behavior="" direction="">
+<table class="table table-bordered border-primary">
+    <tr style="border:2px solid;">
+    {% for d in dolar  %}
+        <td><b style="color:blue">{{d.casa.nombre}}</b></td>
+        <td>            
+            {% if d.casa.nombre == 'Dolar Soja' %}
+                Compra {{d.casa.compra}}            
+            {% else %}  
+                Compra ${{d.casa.compra}}
+            {% endif %}
+        </td>
+        <td>Venta ${{d.casa.venta}}</td>
+        <td><i class="fa-solid fa-circle"></i></td>
+    {% endfor %}
+    </tr>
+</table>   
+        
+</marquee>  
+
+{% endblock %}
