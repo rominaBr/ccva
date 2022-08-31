@@ -27,7 +27,7 @@
                     tabindex="0"  style="height: 400px; overflow-y: scroll;">                    
 
                     {% for cargo in cargos %}                    
-                        <h4 id="{{cargo}}">{{cargo}}</h4>
+                        <h4 id="{{cargo}}" class="mb-4">{{cargo}}</h4>
 
                         {% for miembro in listamiembros %}
                             {% if miembro.cargo == cargo %}
