@@ -1,7 +1,7 @@
 from .base import *
 
 
-DEBUG = False
+DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = ['https://camaracomerciovillaangela.herokuapp.com/'] 
 
