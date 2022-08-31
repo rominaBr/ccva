@@ -3,8 +3,51 @@
 {% block titulo %}Miembros{% endblock titulo %}
 
 {% block content %}
+<style>
+    .scrollspy-example .active{
+        background-color: blue;
+    }
+</style>
+<body class="position-relative" data-bs-spy="scroll" data-bs-target="#list-example">
 
-<div class="container">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div id="list-example" class="list-group">
+
+                    {% for cargo in cargos %}
+                    <a class="list-group-item list-group-item-action" href="#{{cargo}}">{{cargo}}</a>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <div class="col-8">
+                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example offset-md-2 mb-4"
+                    tabindex="0"  style="height: 400px; overflow-y: scroll;">                    
+
+                    {% for cargo in cargos %}                    
+                        <h4 id="{{cargo}}">{{cargo}}</h4>
+
+                        {% for miembro in listamiembros %}
+                            {% if miembro.cargo == cargo %}
+                            <div class="card-body">
+                                <img src="{{ miembro.foto.url }}" alt="" width="60px" height="60px" class="border border-secondary border-3 rounded-circle">
+                                <p>{{miembro.nombre}} {{miembro.apellido}}</p>   
+                            </div>
+                            
+                        {% endif %}
+                    {% endfor %}
+
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- <div class="container">
 
     <h3>Miembros de la Cámara de Comercio de Villa Ángela</h3>
     
@@ -32,5 +75,6 @@
         {% endfor %}
     </div>
     </main>
-</div>
+</div> -->
+
 {% endblock %}

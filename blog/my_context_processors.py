@@ -1,4 +1,4 @@
-from administracion.models import Categoria, Datos
+from administracion.models import Categoria, Datos, Cargos
 
 def get_categorias_y_datos(request):
 
@@ -14,10 +14,15 @@ def get_categorias_y_datos(request):
     except:
         cats = None
     
+    try:
+        cargos = Cargos.objects.all().order_by('id')
+    except:
+        cargos = None
 
     context = {
         'datos': datos,
         'categorias': cats,
+        'cargos': cargos,
     }
 
     return context
