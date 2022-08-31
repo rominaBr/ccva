@@ -63,17 +63,26 @@
     <div class="row mb-3">
         <div class="col-12">            
             
-            <article class="card h-100 border border-1 border-info">
+            {% if coment.autor == post.autor %}
+                <article class="card h-100 border border-2 border-primary">
+            {% else %} 
+                <article class="card h-100 border border-1 border-info">                     
+            {% endif %} 
                 <div class="card-body">
                     <div class="d-flex mb-3">
                         
                         <img src="{{ coment.autor.perfil.foto.url }}" alt="" width="60px" class="border border-info border-3 rounded-circle">
                             <div class="ps-3">
-                                <h6 class="m-0"><a href="{% url 'cuentas:perfil' coment.autor %}">{{coment.autor}}</a></h6>
+                                <h6 class="m-0"><a href="{% url 'cuentas:perfil' coment.autor %}">{{coment.autor}}</a>
+                                    {% if coment.autor == post.autor %}
+                                        <stron style="color: black;">Autor</stron>
+                                    {% endif %}
+                                </h6>
                                 <p class="p-0 h6">{{coment.creado | naturaltime }}</p>
                             </div>
                         </div>
-                    <div class="">                                
+                    <div class="">                         
+                                                  
                         <p class="fs-6 lh-1">{{coment.comentario}}</p>
                     </div>
                 </div>
@@ -142,14 +151,24 @@
         <div class="col-11">
             {% for child_comment in coment.children %}
             <div class="mb-3">
-                <article class="card h-100 border border-1 border-info">
+                {% if child_comment.autor == post.autor %}
+                <article class="card h-100 border border-2 border-primary">
+                {% else %} 
+                <article class="card h-100 border border-1 border-info">                     
+                {% endif %} 
+                
                     <div class="card-body">
-                        <div class="d-flex mb-3">
-                            
+                        <div class="d-flex mb-3">                            
+                             
                             <img src="{{ child_comment.autor.perfil.foto.url }}" alt="" width="60px" class="border border-info border-3 rounded-circle">
                                 <div class="ps-3">
-                                    <h6 class="m-0"><a href="{% url 'cuentas:perfil' child_comment.autor %}">{{child_comment.autor}}</a></h6>
+                                    <h6 class="m-0"><a href="{% url 'cuentas:perfil' child_comment.autor %}">{{child_comment.autor}}</a>
+                                        {% if child_comment.autor == post.autor %}
+                                            <stron style="color: black;">Autor</stron>
+                                        {% endif %} 
+                                    </h6>
                                     <p class="p-0 h6">{{child_comment.creado | naturaltime }}</p>
+                                    
                                 </div>
                             </div>
                         <div class="">                                
