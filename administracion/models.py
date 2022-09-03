@@ -72,3 +72,10 @@ class Enviar_Email_to (models.Model):
     asunto = models.CharField (max_length=50)
     email = models.EmailField (max_length=200)
     mensaje = models.TextField ()
+
+    class Meta:
+        verbose_name = 'Contacto'
+        verbose_name_plural = 'Contacto'
+
+    def __str__(self):
+        return f'De: {self.email} - Asunto: {self.asunto}'

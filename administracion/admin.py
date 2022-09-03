@@ -6,4 +6,9 @@ admin.site.register(Categoria)
 admin.site.register(Datos)
 admin.site.register(Cargos)
 admin.site.register(Miembros)
-admin.site.register(Enviar_Email_to)
+
+
+@admin.register(Enviar_Email_to)
+class Contacto(admin.ModelAdmin):
+
+    readonly_fields = ('asunto', 'email', 'mensaje',)

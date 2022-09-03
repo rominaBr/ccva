@@ -5,6 +5,7 @@ from django.views.generic import ListView
 from posts.models import Post
 from administracion.forms import Envio_de_Email
 from django.core.mail import send_mail
+from django.contrib import messages
 
 
 def elegirPorCategoria(request, pk):    
@@ -73,24 +74,28 @@ def mision_and_vision (request):
     return render (request, "mision_vision.html")
 
 def contact_views (request):
-    form_email = Envio_de_Email ()
+    form_email = Envio_de_Email
     if request.method == "POST":
-        form_email = Envio_de_Email (request.POST)
-        print (form_email)
+        form_email = Envio_de_Email(request.POST)
+        form = Envio_de_Email(request.POST)
+
         if form_email.is_valid ():
             asunto = request.POST["asunto"] #recuperado del name
             email = request.POST["email"]
             mensaje = request.POST["mensaje"]
-            print (form_email) #para ver en consola que llega # borrar
-            
+            form.asunto = asunto
+            form.email = email
+            form.mensaje = mensaje
+            form.save()
             send_mail (
                         asunto,
-                        mensaje + " enviado por: " + email,
-                        'agregar correo de ccva en outlook',
-                        ['aqui se agrega un correo al cual se quiere avisar'],
+                        mensaje + " - Enviado por: " + email,
+                        'ccva_prueba@outlook.com',
+                        ['ccva_prueba@outlook.com'],
                         fail_silently=False,
                     )
-            return redirect (request, "thank")
+            messages.success(request, 'Mensaje enviado')            
+            return redirect ("base:index")
     return render (request, "contact.html", {"form_email":form_email})
 
 
