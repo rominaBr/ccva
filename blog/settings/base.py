@@ -5,7 +5,16 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-ez09gtn-2v!j&qt5_dy&le07c9ll&dduvwey1(^o4ahs2vr_1b'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+
+
 
 # Application definition
 
@@ -140,7 +149,6 @@ CKEDITOR_CONFIGS = {
 }
 
 
-
 from django.contrib.staticfiles import storage
 import functools
 
@@ -154,11 +162,3 @@ def hashed_name(self, name, *args, **kwargs):
     return original_hashed_name(self, name.strip('"'), *args, **kwargs)
 
 storage.HashedFilesMixin.hashed_name = hashed_name
-
-#email smtp:
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "smtp-mail.outlook.com"
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER= os.getenv('ccva_prueba@outlook.com')
-EMAIL_HOST_PASSWORD = os.getenv('Villaangelaprueba2022')
